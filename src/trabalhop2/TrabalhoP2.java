@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package trabalhop2;
+import java.sql.SQLException;
+import trabalhop2.DAO.Interface.Principal;
+import trabalhop2.DAO.ProdutoDAO;
+import trabalhop2.Produto;
 
 /**
  *
@@ -14,8 +18,10 @@ public class TrabalhoP2 {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public static void main(String[] args) throws  SQLException, ClassNotFoundException {
+        Principal principal = new Principal();
+        principal.setVisible(true);
+      
     }
     
 }
