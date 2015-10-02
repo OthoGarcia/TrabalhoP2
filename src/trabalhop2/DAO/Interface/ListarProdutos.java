@@ -9,7 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import trabalhop2.DAO.ProdutoDAO;
 
 /**
@@ -21,14 +24,10 @@ public class ListarProdutos extends javax.swing.JFrame {
     /**
      * Creates new form ListarProdutos
      */
-   
-          
     public ListarProdutos() {
         initComponents();
-        
-        
+
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,6 +43,8 @@ public class ListarProdutos extends javax.swing.JFrame {
         jBTN_Deletar = new javax.swing.JButton();
         jBtn_Alterar = new javax.swing.JButton();
         jBTN_Incluir = new javax.swing.JButton();
+        jTF_Filtro = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -87,61 +88,81 @@ public class ListarProdutos extends javax.swing.JFrame {
             }
         });
 
+        jTF_Filtro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTF_FiltroKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setText("Filtrar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(jBtn_Alterar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBTN_Deletar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBTN_Incluir)
-                .addContainerGap(110, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 96, Short.MAX_VALUE)
+                        .addComponent(jBtn_Alterar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBTN_Deletar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBTN_Incluir)
+                        .addGap(92, 92, 92))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTF_Filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTF_Filtro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBTN_Deletar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtn_Alterar)
-                    .addComponent(jBTN_Incluir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBTN_Incluir)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        
+
         preencherTabela();
-    
+
     }//GEN-LAST:event_formWindowOpened
 
     private void jBTN_DeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTN_DeletarActionPerformed
         ProdutoDAO prod = new ProdutoDAO();
         int teste = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
-        System.out.println(""+teste);
+        System.out.println("" + teste);
         prod.excluir(teste);
         preencherTabela();
     }//GEN-LAST:event_jBTN_DeletarActionPerformed
 
     private void jBtn_AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_AlterarActionPerformed
         AlterarProduto aProduto = new AlterarProduto();
-       
+
         aProduto.pegar(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()),
                 jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString(),
                 Float.parseFloat(jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString()),
                 Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString()));
+
         
-        //aProduto.pegar(1, "teste", 5, 8);
         aProduto.setVisible(true);
         this.dispose();
-      
+
     }//GEN-LAST:event_jBtn_AlterarActionPerformed
 
     private void jBTN_IncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTN_IncluirActionPerformed
@@ -149,6 +170,19 @@ public class ListarProdutos extends javax.swing.JFrame {
         cadasProduto.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBTN_IncluirActionPerformed
+
+    private void jTF_FiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTF_FiltroKeyReleased
+        TableRowSorter sorter = null;
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        sorter = new TableRowSorter<TableModel>(model);
+        jTable1.setRowSorter(sorter);
+        String text = jTF_Filtro.getText();
+        if (text.length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter(text));
+        }
+    }//GEN-LAST:event_jTF_FiltroKeyReleased
 
     /**
      * @param args the command line arguments
@@ -184,10 +218,11 @@ public class ListarProdutos extends javax.swing.JFrame {
             }
         });
     }
-    public void preencherTabela(){
-        
-        DefaultTableModel tableModel =(DefaultTableModel) jTable1.getModel();  
-        tableModel.setNumRows(0); 
+
+    public void preencherTabela() {
+
+        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+        tableModel.setNumRows(0);
         try {
             ProdutoDAO prod = new ProdutoDAO();
             ResultSet rs = prod.listar();
@@ -214,7 +249,9 @@ public class ListarProdutos extends javax.swing.JFrame {
     private javax.swing.JButton jBTN_Deletar;
     private javax.swing.JButton jBTN_Incluir;
     private javax.swing.JButton jBtn_Alterar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTF_Filtro;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
