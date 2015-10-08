@@ -21,7 +21,7 @@ public class ItemDAO {
         Connection con = null;
         try {
             //Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pedidos","root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pedido","root","");
             System.out.println("CONECTADO");
         } catch (SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -29,11 +29,11 @@ public class ItemDAO {
         return con;
     }
     
-    public void incluir(int quant, int preco, int idProduto, int idPedido) {
+    public void incluir(int quant, float preco, int idProduto, int idPedido, double subTotal) {
         Connection con = conectar();
         try{
-            PreparedStatement st = con.prepareStatement("INSERT INTO `item`(`quant`, `preco`, `idProduto`,'idPedido') VALUES ('"+ quant+
-                    "',"+preco+","+idProduto +","+idPedido+")");
+            PreparedStatement st = con.prepareStatement("INSERT INTO item(quant, preco, idProduto, idPedido) VALUES ("+ quant+
+                    ","+preco+","+idProduto +","+idPedido+")");
             st.execute();
             System.out.println("Inserido");
             con.close();

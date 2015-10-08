@@ -26,7 +26,7 @@ public class ProdutoDAO {
         Connection con = null;
         try {
             //Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pedidos","root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pedido","root","");
             System.out.println("CONECTADO");
         } catch (SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,6 +81,27 @@ public class ProdutoDAO {
         try {
             stmt = con.createStatement();
             stmt.executeUpdate("UPDATE `produto` SET `descricao`='"+descricao+"',`preco`="+preco+",`quant`="+quant+" WHERE id = "+ id);
+            
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public void alterarEstoque(int id,int quant){
+        Connection con = conectar();
+        Statement stmt;
+        ResultSet rs;
+        try {
+            int estoque=0;
+            stmt = con.createStatement();
+            rs = stmt.executeQuery("Select * from produto where id = "+id);
+            if (rs.next()){
+                estoque= rs.getInt(4);
+            }
+            estoque = estoque - quant;
+            stmt.executeUpdate("UPDATE `produto` SET `quant`="+estoque+" WHERE id = "+ id);
             
             con.close();
         } catch (SQLException ex) {

@@ -5,7 +5,20 @@
  */
 package trabalhop2.DAO.Interface;
 
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import trabalhop2.DAO.ItemDAO;
+import trabalhop2.DAO.PedidoDAO;
+import trabalhop2.DAO.ProdutoDAO;
 
 /**
  *
@@ -16,12 +29,13 @@ public class EfetuarPedido extends javax.swing.JFrame {
     /**
      * Creates new form Pedido
      */
+    int idCliente = 0;
+
     public EfetuarPedido() {
         initComponents();
-        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
-        String[] tableColumnsName = {"Codigo", "Descrição", "Preço", "Quantidade"};
-        tableModel.setColumnIdentifiers(tableColumnsName);
-        tableModel.setNumRows(0);
+        preencherTabela();
+        jTF_Quant.setText("1");
+
     }
 
     /**
@@ -35,11 +49,35 @@ public class EfetuarPedido extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jBT_Inserir = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTF_Quant = new javax.swing.JTextField();
+        jLBL_Total = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo", "Nome", "Preço", "Qauntidade"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jButton1.setText("Finalizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -50,44 +88,131 @@ public class EfetuarPedido extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jTable2);
 
-        jBT_Inserir.setText("inserir");
-        jBT_Inserir.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setText("Inserir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBT_InserirActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
+
+        jLabel1.setText("Quantidade");
+
+        jLBL_Total.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel3.setText("Total:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBT_Inserir)
-                .addGap(161, 161, 161))
+                .addContainerGap(257, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTF_Quant, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addComponent(jButton2)
+                .addGap(236, 236, 236))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(332, 332, 332)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jLBL_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jLabel1)
+                    .addComponent(jTF_Quant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBT_Inserir)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLBL_Total, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jLabel3)))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBT_InserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBT_InserirActionPerformed
-        AdicionarProduto adProduto = new AdicionarProduto();
-        adProduto.setVisible(true);
-        this.dispose();
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //pegar a data do pc
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar c = Calendar.getInstance();
+        String data = df.format(c.getTime());
+
+        //salvar o pedido no banco
+        PedidoDAO pedido = new PedidoDAO();
+        pedido.incluir(data,
+                "Em Aberto",
+                idCliente,
+                total());
+        //salvar os itens no banco e descontando do estoque
+        int nLinhas = jTable1.getRowCount();
+        for (int i = 0; i < nLinhas; i++) {
+            Float preco = Float.parseFloat(jTable1.getValueAt(i, 2).toString().substring(0, 3));
+            ItemDAO item = new ItemDAO();
+            item.incluir(Integer.parseInt(jTable1.getValueAt(i, 3).toString()),
+                    preco,
+                    Integer.parseInt(jTable1.getValueAt(i, 0).toString()),
+                    pedido.getIdPedido(),
+                    Integer.parseInt(jTable1.getValueAt(i, 3).toString()) * preco);
             
-    }//GEN-LAST:event_jBT_InserirActionPerformed
+            //alterar o estoque
+           ProdutoDAO prod = new ProdutoDAO();
+           prod.alterarEstoque(Integer.parseInt(jTable1.getValueAt(i, 0).toString()),
+                   Integer.parseInt(jTable1.getValueAt(i, 3).toString()));
+        }
+
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (jTF_Quant.getText() != "") {
+            
+
+            int quantEstoque =Integer.parseInt(jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString())- Integer.parseInt(jTF_Quant.getText()) ;
+            if (quantEstoque >= 0) {
+                
+                
+                //coloca a diferença no estoque
+                jTable2.setValueAt(quantEstoque+"",
+                        jTable2.getSelectedRow(), 3);
+                
+                
+                //pega o produto e passa para a tabela pedido
+                pegar(Integer.parseInt(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString()),
+                    jTable2.getValueAt(jTable2.getSelectedRow(), 1).toString(),
+                    Float.parseFloat(jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString()),
+                    Integer.parseInt(jTF_Quant.getText().toString()));
+                jLBL_Total.setText(total() + "");
+                
+                
+            }else {
+                JOptionPane.showMessageDialog(null, "Nao tem "+ jTF_Quant.getText() +" unidades deste produto em estoque");
+                jTF_Quant.setText("1");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Porfavor ensira a quantidade de Itens!");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -124,18 +249,68 @@ public class EfetuarPedido extends javax.swing.JFrame {
             }
         });
     }
-    
-    public void pegar(int id, String desc, float preco, int quant){
+
+    public void pegar(int id, String desc, float preco, int quant) {
+
         DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
-        tableModel.addRow(new String[]{id+"", desc,preco+"", quant+""});
-        jTable1.setModel(tableModel);
+        tableModel.addRow(new String[]{id + "", desc, preco + "", quant + ""});
+        jTable1.addRowSelectionInterval(0, 0);
+        //jTable1.setModel(tableModel);
+
     }
-    
-    
+
+    public void pegarIdCliente(int idCLiente) {
+        this.idCliente = idCLiente;
+
+    }
+
+    public double total() {
+        float total = 0;
+        int quantLinhas = jTable1.getRowCount();
+
+        for (int i = 0; i < quantLinhas; i++) {
+            total += Float.parseFloat(jTable1.getValueAt(i, 2).toString())
+                    * Integer.parseInt(jTable1.getValueAt(i, 3).toString());
+        }
+        return total;
+    }
+
+    public void preencherTabela() {
+
+        DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
+        tableModel.setNumRows(0);
+        try {
+            ProdutoDAO prod = new ProdutoDAO();
+            ResultSet rs = prod.listar();
+            String[] tableColumnsName = {"Codigo", "Descrição", "Preço", "Estoque"};
+            DefaultTableModel aModel = (DefaultTableModel) jTable2.getModel();
+            aModel.setColumnIdentifiers(tableColumnsName);
+            java.sql.ResultSetMetaData rsmd = rs.getMetaData();
+            int colNo = rsmd.getColumnCount();
+            while (rs.next()) {
+                Object[] objects = new Object[colNo];
+                for (int i = 0; i < colNo; i++) {
+                    objects[i] = rs.getObject(i + 1);
+                }
+                aModel.addRow(objects);
+            }
+            jTable2.setModel(aModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListarProdutos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        jTable2.addRowSelectionInterval(0, 0);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBT_Inserir;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLBL_Total;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTF_Quant;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

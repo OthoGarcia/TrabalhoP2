@@ -24,7 +24,7 @@ public class ClienteDAO {
         Connection con = null;
         try {
             //Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pedidos", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pedido", "root", "");
             System.out.println("CONECTADO");
         } catch (SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);

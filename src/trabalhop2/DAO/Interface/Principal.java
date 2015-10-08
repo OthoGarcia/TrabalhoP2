@@ -171,8 +171,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-       EfetuarPedido pedido = new EfetuarPedido();
-       pedido.setVisible(true);
+       EscolherCliente eCliente = new EscolherCliente();
+       eCliente.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 

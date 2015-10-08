@@ -10,18 +10,18 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import trabalhop2.DAO.ProdutoDAO;
+import trabalhop2.DAO.ClienteDAO;
 
 /**
  *
  * @author Casa
  */
-public class AdicionarProduto extends javax.swing.JFrame {
+public class EscolherCliente extends javax.swing.JFrame {
 
     /**
-     * Creates new form Produto
+     * Creates new form EscolherCliente
      */
-    public AdicionarProduto() {
+    public EscolherCliente() {
         initComponents();
         preencherTabela();
     }
@@ -37,7 +37,7 @@ public class AdicionarProduto extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jBT_Selecionar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,10 +54,10 @@ public class AdicionarProduto extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jBT_Selecionar.setText("Selecionar");
-        jBT_Selecionar.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Selecionar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBT_SelecionarActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -65,34 +65,30 @@ public class AdicionarProduto extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(jBT_Selecionar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(160, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(159, 159, 159))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBT_Selecionar)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addComponent(jButton1)
+                .addGap(0, 23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBT_SelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBT_SelecionarActionPerformed
-        EfetuarPedido efPedido = new EfetuarPedido();
-        efPedido.setVisible(true);
-        efPedido.pegar(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()),
-               jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString(),
-               Float.parseFloat(jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString()),
-               Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString()));
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        EfetuarPedido efetuarPedido = new EfetuarPedido();
+        efetuarPedido.pegarIdCliente(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
+        efetuarPedido.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jBT_SelecionarActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -111,21 +107,20 @@ public class AdicionarProduto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdicionarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EscolherCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdicionarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EscolherCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdicionarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EscolherCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdicionarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EscolherCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdicionarProduto().setVisible(true);
+                new EscolherCliente().setVisible(true);
             }
         });
     }
@@ -135,9 +130,9 @@ public class AdicionarProduto extends javax.swing.JFrame {
         DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
         tableModel.setNumRows(0);
         try {
-            ProdutoDAO prod = new ProdutoDAO();
-            ResultSet rs = prod.listar();
-            String[] tableColumnsName = {"Codigo", "Descrição", "Preço", "Quantidade"};
+            ClienteDAO cliente = new ClienteDAO();
+            ResultSet rs = cliente.listar();
+            String[] tableColumnsName = {"Codigo", "Nome", "Email", "Telefone"};
             DefaultTableModel aModel = (DefaultTableModel) jTable1.getModel();
             aModel.setColumnIdentifiers(tableColumnsName);
             java.sql.ResultSetMetaData rsmd = rs.getMetaData();
@@ -155,9 +150,8 @@ public class AdicionarProduto extends javax.swing.JFrame {
         }
         jTable1.addRowSelectionInterval(0, 0);
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBT_Selecionar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
