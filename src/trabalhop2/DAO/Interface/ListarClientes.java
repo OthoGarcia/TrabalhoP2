@@ -39,8 +39,18 @@ public class ListarClientes extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jBT_Alterar = new javax.swing.JButton();
-        jBT_Excluir = new javax.swing.JButton();
         jBT_Incluir = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMclientes = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMprodutos = new javax.swing.JMenu();
+        jMI_Cadastro = new javax.swing.JMenuItem();
+        jMI_Listar = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,19 +74,82 @@ public class ListarClientes extends javax.swing.JFrame {
             }
         });
 
-        jBT_Excluir.setText("Deletar");
-        jBT_Excluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBT_ExcluirActionPerformed(evt);
-            }
-        });
-
         jBT_Incluir.setText("Incluir");
         jBT_Incluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBT_IncluirActionPerformed(evt);
             }
         });
+
+        jMclientes.setText("Clientes");
+
+        jMenuItem3.setText("Cadastrar");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMclientes.add(jMenuItem3);
+
+        jMenuItem4.setText("Listar");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMclientes.add(jMenuItem4);
+
+        jMenuBar1.add(jMclientes);
+
+        jMprodutos.setText("Produtos");
+
+        jMI_Cadastro.setText("Cadastro");
+        jMI_Cadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMI_CadastroActionPerformed(evt);
+            }
+        });
+        jMprodutos.add(jMI_Cadastro);
+
+        jMI_Listar.setText("Listar");
+        jMI_Listar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMI_ListarActionPerformed(evt);
+            }
+        });
+        jMprodutos.add(jMI_Listar);
+
+        jMenuItem1.setText("Alterar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMprodutos.add(jMenuItem1);
+
+        jMenuBar1.add(jMprodutos);
+
+        jMenu2.setText("Pedido");
+
+        jMenuItem5.setText("Efetuar");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem5);
+
+        jMenuItem6.setText("Listar");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem6);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,9 +159,7 @@ public class ListarClientes extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(97, 97, 97)
                 .addComponent(jBT_Alterar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBT_Excluir)
-                .addGap(14, 14, 14)
+                .addGap(91, 91, 91)
                 .addComponent(jBT_Incluir)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -100,7 +171,6 @@ public class ListarClientes extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBT_Alterar)
-                    .addComponent(jBT_Excluir)
                     .addComponent(jBT_Incluir)))
         );
 
@@ -118,17 +188,55 @@ public class ListarClientes extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jBT_AlterarActionPerformed
 
-    private void jBT_ExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBT_ExcluirActionPerformed
-        ClienteDAO cliente = new ClienteDAO();
-        cliente.excluir(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
-        preencherTabela();
-    }//GEN-LAST:event_jBT_ExcluirActionPerformed
-
     private void jBT_IncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBT_IncluirActionPerformed
         CadastrarCliente cCliente = new CadastrarCliente();
         cCliente.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBT_IncluirActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        CadastrarCliente cCliente = new CadastrarCliente();
+        cCliente.setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        ListarClientes lClientes = new ListarClientes();
+        lClientes.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMI_CadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_CadastroActionPerformed
+        CadastrarProduto cadastrarProdutos  = new CadastrarProduto();
+        cadastrarProdutos.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMI_CadastroActionPerformed
+
+    private void jMI_ListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_ListarActionPerformed
+        ListarProdutos lProdutos = new ListarProdutos();
+        lProdutos.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMI_ListarActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        ListarProdutos lProdutos = new ListarProdutos();
+        lProdutos.setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        EscolherCliente eCliente = new EscolherCliente();
+        eCliente.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        ListarPedido lPedido = new ListarPedido();
+        lPedido.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -193,8 +301,18 @@ public class ListarClientes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBT_Alterar;
-    private javax.swing.JButton jBT_Excluir;
     private javax.swing.JButton jBT_Incluir;
+    private javax.swing.JMenuItem jMI_Cadastro;
+    private javax.swing.JMenuItem jMI_Listar;
+    private javax.swing.JMenu jMclientes;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenu jMprodutos;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

@@ -30,11 +30,10 @@ public class EfetuarPedido extends javax.swing.JFrame {
      * Creates new form Pedido
      */
     int idCliente = 0;
+    boolean salvar = true;
 
     public EfetuarPedido() {
         initComponents();
-        preencherTabela();
-        jTF_Quant.setText("1");
 
     }
 
@@ -50,15 +49,17 @@ public class EfetuarPedido extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jTF_Quant = new javax.swing.JTextField();
         jLBL_Total = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jBtn_Cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -70,81 +71,63 @@ public class EfetuarPedido extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Finalizar");
+        jButton1.setText("Efetuar Pagamento");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        jLBL_Total.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
 
-        jButton2.setText("Inserir");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel3.setText("Total:");
+
+        jButton2.setText("Inserir Item");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Quantidade");
-
-        jLBL_Total.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel3.setText("Total:");
+        jBtn_Cancelar.setText("Cancelar");
+        jBtn_Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtn_CancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(257, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTF_Quant, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addComponent(jButton2)
-                .addGap(236, 236, 236))
             .addGroup(layout.createSequentialGroup()
-                .addGap(332, 332, 332)
+                .addGap(160, 160, 160)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jBtn_Cancelar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jLBL_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLBL_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jLabel1)
-                    .addComponent(jTF_Quant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLBL_Total, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(jLBL_Total, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton1)
-                        .addComponent(jLabel3)))
+                        .addComponent(jLabel3)
+                        .addComponent(jButton2)
+                        .addComponent(jBtn_Cancelar)))
                 .addContainerGap())
         );
 
@@ -152,67 +135,44 @@ public class EfetuarPedido extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //pegar a data do pc
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        Calendar c = Calendar.getInstance();
-        String data = df.format(c.getTime());
-
-        //salvar o pedido no banco
         PedidoDAO pedido = new PedidoDAO();
-        pedido.incluir(data,
-                "Em Aberto",
-                idCliente,
-                total());
-        //salvar os itens no banco e descontando do estoque
-        int nLinhas = jTable1.getRowCount();
-        for (int i = 0; i < nLinhas; i++) {
-            Float preco = Float.parseFloat(jTable1.getValueAt(i, 2).toString().substring(0, 3));
-            ItemDAO item = new ItemDAO();
-            item.incluir(Integer.parseInt(jTable1.getValueAt(i, 3).toString()),
-                    preco,
-                    Integer.parseInt(jTable1.getValueAt(i, 0).toString()),
-                    pedido.getIdPedido(),
-                    Integer.parseInt(jTable1.getValueAt(i, 3).toString()) * preco);
-            
-            //alterar o estoque
-           ProdutoDAO prod = new ProdutoDAO();
-           prod.alterarEstoque(Integer.parseInt(jTable1.getValueAt(i, 0).toString()),
-                   Integer.parseInt(jTable1.getValueAt(i, 3).toString()));
-        }
-
+        
+        pedido.alterarTotal(total());
+        EfetuarPagamento ePagamento = new EfetuarPagamento();
+        ePagamento.setVisible(true);
+        this.dispose();
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (jTF_Quant.getText() != "") {
-            
-
-            int quantEstoque =Integer.parseInt(jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString())- Integer.parseInt(jTF_Quant.getText()) ;
-            if (quantEstoque >= 0) {
-                
-                
-                //coloca a diferença no estoque
-                jTable2.setValueAt(quantEstoque+"",
-                        jTable2.getSelectedRow(), 3);
-                
-                
-                //pega o produto e passa para a tabela pedido
-                pegar(Integer.parseInt(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString()),
-                    jTable2.getValueAt(jTable2.getSelectedRow(), 1).toString(),
-                    Float.parseFloat(jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString()),
-                    Integer.parseInt(jTF_Quant.getText().toString()));
-                jLBL_Total.setText(total() + "");
-                
-                
-            }else {
-                JOptionPane.showMessageDialog(null, "Nao tem "+ jTF_Quant.getText() +" unidades deste produto em estoque");
-                jTF_Quant.setText("1");
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Porfavor ensira a quantidade de Itens!");
-        }
+        InserirItem inserirItem = new InserirItem();
+        inserirItem.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        if (salvar) {
+            salvarPedido();
+        }
+        preencherTabela();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jBtn_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_CancelarActionPerformed
+        int nLinhas = jTable1.getRowCount();
+        ProdutoDAO prod = new ProdutoDAO();
+        PedidoDAO pedido = new PedidoDAO();
+        
+        for (int i = 0; i<nLinhas;i++){
+            prod.acrescentarEstoque(Integer.parseInt(jTable1.getValueAt(i, 0).toString()),
+                    Integer.parseInt(jTable1.getValueAt(i, 3).toString()));
+        }
+        pedido.alterarStatus("Cancelado",pedido.getIdPedido());
+        
+        EscolherCliente eCliente = new EscolherCliente();
+        eCliente.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_jBtn_CancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -275,15 +235,41 @@ public class EfetuarPedido extends javax.swing.JFrame {
         return total;
     }
 
+    public int getidPedido() {
+        PedidoDAO pedido = new PedidoDAO();
+        return pedido.getIdPedido();
+
+    }
+
+    public void salvarPedido() {
+        //salvar o pedido no banco
+        //pegar a data do pc
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar c = Calendar.getInstance();
+        String data = df.format(c.getTime());
+        PedidoDAO pedido = new PedidoDAO();
+
+        pedido.incluir(data,
+                "Em Aberto",
+                idCliente,
+                total());
+        salvar = false;
+    }
+    
+    public void setSalvar(Boolean s){
+        salvar = s;
+    }
+
     public void preencherTabela() {
 
-        DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
+        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
         tableModel.setNumRows(0);
         try {
-            ProdutoDAO prod = new ProdutoDAO();
-            ResultSet rs = prod.listar();
-            String[] tableColumnsName = {"Codigo", "Descrição", "Preço", "Estoque"};
-            DefaultTableModel aModel = (DefaultTableModel) jTable2.getModel();
+            ItemDAO item = new ItemDAO();
+            PedidoDAO pedido = new PedidoDAO();
+            ResultSet rs = item.listar(pedido.getIdPedido());
+            String[] tableColumnsName = {"Cod. Produto", "Descrição", "Preço", "Quantidade"};
+            DefaultTableModel aModel = (DefaultTableModel) jTable1.getModel();
             aModel.setColumnIdentifiers(tableColumnsName);
             java.sql.ResultSetMetaData rsmd = rs.getMetaData();
             int colNo = rsmd.getColumnCount();
@@ -294,23 +280,27 @@ public class EfetuarPedido extends javax.swing.JFrame {
                 }
                 aModel.addRow(objects);
             }
-            jTable2.setModel(aModel);
+            jTable1.setModel(aModel);
+            if (jTable1.getRowCount() > 0) {
+                jTable1.addRowSelectionInterval(0, 0);
+            }
+            DecimalFormat df = new DecimalFormat("0.00");
+            
+            jLBL_Total.setText(df.format(total()));
         } catch (SQLException ex) {
             Logger.getLogger(ListarProdutos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        jTable2.addRowSelectionInterval(0, 0);
+
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtn_Cancelar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLBL_Total;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTF_Quant;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

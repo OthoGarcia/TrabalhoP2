@@ -38,9 +38,9 @@ public class Principal extends javax.swing.JFrame {
         jMI_Cadastro = new javax.swing.JMenuItem();
         jMI_Listar = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -92,14 +92,6 @@ public class Principal extends javax.swing.JFrame {
         });
         jMprodutos.add(jMenuItem1);
 
-        jMenuItem2.setText("Excluir");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMprodutos.add(jMenuItem2);
-
         jMenuBar1.add(jMprodutos);
 
         jMenu2.setText("Pedido");
@@ -111,6 +103,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem5);
+
+        jMenuItem6.setText("Listar");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
 
@@ -143,19 +143,11 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMI_ListarActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-       AlterarProduto aProduto = new AlterarProduto();
-       aProduto.setVisible(true);
-       this.dispose();
-               
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        ListarProdutos lProdutos = new ListarProdutos();
+       ListarProdutos lProdutos = new ListarProdutos();
         lProdutos.setVisible(true);
         this.dispose();
-        
-                
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+               
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         ListarClientes lClientes = new ListarClientes();
@@ -175,6 +167,12 @@ public class Principal extends javax.swing.JFrame {
        eCliente.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+       ListarPedido lPedido = new ListarPedido();
+       lPedido.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,10 +217,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenu jMprodutos;
     // End of variables declaration//GEN-END:variables
 }

@@ -89,7 +89,7 @@ public class ProdutoDAO {
         
     }
     
-    public void alterarEstoque(int id,int quant){
+    public void tirarEstoque(int id,int quant){
         Connection con = conectar();
         Statement stmt;
         ResultSet rs;
@@ -110,5 +110,24 @@ public class ProdutoDAO {
         
     }
     
-    
+    public void acrescentarEstoque(int id,int quant){
+        Connection con = conectar();
+        Statement stmt;
+        ResultSet rs;
+        try {
+            int estoque=0;
+            stmt = con.createStatement();
+            rs = stmt.executeQuery("Select * from produto where id = "+id);
+            if (rs.next()){
+                estoque= rs.getInt(4);
+            }
+            estoque = estoque + quant;
+            stmt.executeUpdate("UPDATE `produto` SET `quant`="+estoque+" WHERE id = "+ id);
+            
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
 }

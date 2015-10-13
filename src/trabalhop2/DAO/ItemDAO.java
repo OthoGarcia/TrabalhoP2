@@ -8,7 +8,9 @@ package trabalhop2.DAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,5 +42,20 @@ public class ItemDAO {
         } catch(Exception e){
         }
         
+    }
+    public ResultSet listar( int idPedido){
+        Connection con = conectar();
+        Statement stmt;
+        ResultSet rs= null;
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery("SELECT item.idProduto, produto.descricao, item.preco, item.quant FROM item, pedido, produto "
+                    + "WHERE item.idProduto = produto.id and item.IdPedido = pedido.id and pedido.id = "+ idPedido);
+            //con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return rs;
     }
 }

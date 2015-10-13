@@ -40,11 +40,21 @@ public class ListarProdutos extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jBTN_Deletar = new javax.swing.JButton();
         jBtn_Alterar = new javax.swing.JButton();
         jBTN_Incluir = new javax.swing.JButton();
         jTF_Filtro = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMclientes = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMprodutos = new javax.swing.JMenu();
+        jMI_Cadastro = new javax.swing.JMenuItem();
+        jMI_Listar = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -66,13 +76,6 @@ public class ListarProdutos extends javax.swing.JFrame {
         ));
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
         jScrollPane1.setViewportView(jTable1);
-
-        jBTN_Deletar.setText("Deletar");
-        jBTN_Deletar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBTN_DeletarActionPerformed(evt);
-            }
-        });
 
         jBtn_Alterar.setText("Alterar");
         jBtn_Alterar.addActionListener(new java.awt.event.ActionListener() {
@@ -96,6 +99,76 @@ public class ListarProdutos extends javax.swing.JFrame {
 
         jLabel1.setText("Filtrar");
 
+        jMclientes.setText("Clientes");
+
+        jMenuItem3.setText("Cadastrar");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMclientes.add(jMenuItem3);
+
+        jMenuItem4.setText("Listar");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMclientes.add(jMenuItem4);
+
+        jMenuBar1.add(jMclientes);
+
+        jMprodutos.setText("Produtos");
+
+        jMI_Cadastro.setText("Cadastro");
+        jMI_Cadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMI_CadastroActionPerformed(evt);
+            }
+        });
+        jMprodutos.add(jMI_Cadastro);
+
+        jMI_Listar.setText("Listar");
+        jMI_Listar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMI_ListarActionPerformed(evt);
+            }
+        });
+        jMprodutos.add(jMI_Listar);
+
+        jMenuItem1.setText("Alterar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMprodutos.add(jMenuItem1);
+
+        jMenuBar1.add(jMprodutos);
+
+        jMenu2.setText("Pedido");
+
+        jMenuItem5.setText("Efetuar");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem5);
+
+        jMenuItem6.setText("Listar");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem6);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,9 +180,7 @@ public class ListarProdutos extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 96, Short.MAX_VALUE)
                         .addComponent(jBtn_Alterar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBTN_Deletar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(79, 79, 79)
                         .addComponent(jBTN_Incluir)
                         .addGap(92, 92, 92))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -121,7 +192,7 @@ public class ListarProdutos extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(38, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTF_Filtro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -129,7 +200,6 @@ public class ListarProdutos extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBTN_Deletar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtn_Alterar)
                     .addComponent(jBTN_Incluir)))
         );
@@ -142,14 +212,6 @@ public class ListarProdutos extends javax.swing.JFrame {
         preencherTabela();
 
     }//GEN-LAST:event_formWindowOpened
-
-    private void jBTN_DeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTN_DeletarActionPerformed
-        ProdutoDAO prod = new ProdutoDAO();
-        int teste = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
-        System.out.println("" + teste);
-        prod.excluir(teste);
-        preencherTabela();
-    }//GEN-LAST:event_jBTN_DeletarActionPerformed
 
     private void jBtn_AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_AlterarActionPerformed
         AlterarProduto aProduto = new AlterarProduto();
@@ -183,6 +245,50 @@ public class ListarProdutos extends javax.swing.JFrame {
             sorter.setRowFilter(RowFilter.regexFilter(text));
         }
     }//GEN-LAST:event_jTF_FiltroKeyReleased
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        CadastrarCliente cCliente = new CadastrarCliente();
+        cCliente.setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        ListarClientes lClientes = new ListarClientes();
+        lClientes.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMI_CadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_CadastroActionPerformed
+        CadastrarProduto cadastrarProdutos  = new CadastrarProduto();
+        cadastrarProdutos.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMI_CadastroActionPerformed
+
+    private void jMI_ListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_ListarActionPerformed
+        ListarProdutos lProdutos = new ListarProdutos();
+        lProdutos.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMI_ListarActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        ListarProdutos lProdutos = new ListarProdutos();
+        lProdutos.setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        EscolherCliente eCliente = new EscolherCliente();
+        eCliente.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        ListarPedido lPedido = new ListarPedido();
+        lPedido.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,10 +352,20 @@ public class ListarProdutos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBTN_Deletar;
     private javax.swing.JButton jBTN_Incluir;
     private javax.swing.JButton jBtn_Alterar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuItem jMI_Cadastro;
+    private javax.swing.JMenuItem jMI_Listar;
+    private javax.swing.JMenu jMclientes;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenu jMprodutos;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTF_Filtro;
     private javax.swing.JTable jTable1;
