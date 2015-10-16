@@ -7,6 +7,7 @@ package trabalhop2.DAO.Interface;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -25,7 +26,7 @@ public class ListarPedido extends javax.swing.JFrame {
     public ListarPedido() {
         initComponents();
         preencherTabela();
-                
+
     }
 
     /**
@@ -52,21 +53,48 @@ public class ListarPedido extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setResizable(false);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo", "Nome", "Total", "Data", "Status"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMinWidth(60);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(60);
+            jTable1.getColumnModel().getColumn(2).setMinWidth(100);
+            jTable1.getColumnModel().getColumn(2).setMaxWidth(100);
+            jTable1.getColumnModel().getColumn(3).setMinWidth(100);
+            jTable1.getColumnModel().getColumn(3).setMaxWidth(100);
+            jTable1.getColumnModel().getColumn(4).setMinWidth(120);
+            jTable1.getColumnModel().getColumn(4).setMaxWidth(120);
+        }
 
         jButton1.setText("Pagar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -81,6 +109,8 @@ public class ListarPedido extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+
+        jMenuBar1.setRequestFocusEnabled(false);
 
         jMclientes.setText("Clientes");
 
@@ -150,17 +180,23 @@ public class ListarPedido extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setText("Sair");
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu3);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 25, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(96, 96, 96)
+                .addGap(224, 224, 224)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
@@ -169,26 +205,43 @@ public class ListarPedido extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)))
+                    .addComponent(jButton2))
+                .addGap(7, 7, 7))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       PedidoDAO pedido = new PedidoDAO();
-       pedido.alterarStatus("Pago",Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
-       preencherTabela();
+        String status = jTable1.getValueAt(jTable1.getSelectedRow(), 4).toString();
+        if (status.equals("Em Aberto")) {
+            PedidoDAO pedido = new PedidoDAO();
+            pedido.alterarStatus("Pago", Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
+            preencherTabela();
+
+        } else {
+
+            DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+            tableModel.setNumRows(0);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        PedidoDAO pedido = new PedidoDAO();
-       pedido.alterarStatus("Cancelado",Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
-       preencherTabela();
+        String status = jTable1.getValueAt(jTable1.getSelectedRow(), 4).toString();
+        if (status.equals("Em Aberto")) {
+            PedidoDAO pedido = new PedidoDAO();
+            pedido.alterarStatus("Cancelado", Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
+            preencherTabela();
+        }
+        else {
+
+            DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+            tableModel.setNumRows(0);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -205,7 +258,7 @@ public class ListarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMI_CadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_CadastroActionPerformed
-        CadastrarProduto cadastrarProdutos  = new CadastrarProduto();
+        CadastrarProduto cadastrarProdutos = new CadastrarProduto();
         cadastrarProdutos.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMI_CadastroActionPerformed
@@ -234,6 +287,10 @@ public class ListarPedido extends javax.swing.JFrame {
         lPedido.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jMenu3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -269,7 +326,7 @@ public class ListarPedido extends javax.swing.JFrame {
             }
         });
     }
-    
+
     public void preencherTabela() {
 
         DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
@@ -277,9 +334,10 @@ public class ListarPedido extends javax.swing.JFrame {
         try {
             PedidoDAO pedido = new PedidoDAO();
             ResultSet rs = pedido.listar();
-            String[] tableColumnsName = {"Codigo", "Nome", "Total", "Data", "Status"};
+            //String[] tableColumnsName = {"Codigo", "Nome", "Total", "Data", "Status"};
             DefaultTableModel aModel = (DefaultTableModel) jTable1.getModel();
-            aModel.setColumnIdentifiers(tableColumnsName);
+            //aModel.setColumnIdentifiers(tableColumnsName);
+            
             java.sql.ResultSetMetaData rsmd = rs.getMetaData();
             int colNo = rsmd.getColumnCount();
             while (rs.next()) {
@@ -290,11 +348,29 @@ public class ListarPedido extends javax.swing.JFrame {
                 aModel.addRow(objects);
             }
             jTable1.setModel(aModel);
+            formatar();
         } catch (SQLException ex) {
             Logger.getLogger(ListarProdutos.class.getName()).log(Level.SEVERE, null, ex);
         }
         jTable1.addRowSelectionInterval(0, 0);
     }
+    public void formatar(){
+        int nLinhas = jTable1.getRowCount();
+        
+        for (int i = 0; i< nLinhas; i++){
+            String formato =  jTable1.getValueAt(i, 2).toString();
+            DecimalFormat df = new DecimalFormat("#0.00"); 
+            formato = df.format(Float.parseFloat(formato));
+            jTable1.setValueAt(formato, i, 2);
+            jTable1.getColumnModel().getColumn(2).setCellRenderer(new CellRenderer()); 
+            CellRenderer cell = new CellRenderer();
+            cell.setAlinhamento(0);
+            jTable1.getColumnModel().getColumn(3).setCellRenderer(cell);
+            
+        }
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -302,6 +378,7 @@ public class ListarPedido extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMI_Listar;
     private javax.swing.JMenu jMclientes;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem3;

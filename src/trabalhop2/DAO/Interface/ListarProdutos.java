@@ -7,6 +7,7 @@ package trabalhop2.DAO.Interface;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.RowFilter;
@@ -55,8 +56,9 @@ public class ListarProdutos extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -71,11 +73,27 @@ public class ListarProdutos extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo", "Descrição", "Preço", "Quantidade"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMinWidth(60);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(60);
+            jTable1.getColumnModel().getColumn(2).setMinWidth(100);
+            jTable1.getColumnModel().getColumn(2).setMaxWidth(100);
+            jTable1.getColumnModel().getColumn(3).setMinWidth(80);
+            jTable1.getColumnModel().getColumn(3).setMaxWidth(80);
+        }
 
         jBtn_Alterar.setText("Alterar");
         jBtn_Alterar.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +116,8 @@ public class ListarProdutos extends javax.swing.JFrame {
         });
 
         jLabel1.setText("Filtrar");
+
+        jMenuBar1.setRequestFocusEnabled(false);
 
         jMclientes.setText("Clientes");
 
@@ -167,6 +187,14 @@ public class ListarProdutos extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setText("Sair");
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu3);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -208,8 +236,9 @@ public class ListarProdutos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
+        
         preencherTabela();
+        formatar();
 
     }//GEN-LAST:event_formWindowOpened
 
@@ -236,7 +265,7 @@ public class ListarProdutos extends javax.swing.JFrame {
     private void jTF_FiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTF_FiltroKeyReleased
         TableRowSorter sorter = null;
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        sorter = new TableRowSorter<TableModel>(model);
+        sorter = new TableRowSorter<>(model);
         jTable1.setRowSorter(sorter);
         String text = jTF_Filtro.getText();
         if (text.length() == 0) {
@@ -290,6 +319,10 @@ public class ListarProdutos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jMenu3MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -332,9 +365,9 @@ public class ListarProdutos extends javax.swing.JFrame {
         try {
             ProdutoDAO prod = new ProdutoDAO();
             ResultSet rs = prod.listar();
-            String[] tableColumnsName = {"Codigo", "Descrição", "Preço", "Quantidade"};
+            //String[] tableColumnsName = {"Codigo", "Descrição", "Preço", "Quantidade"};
             DefaultTableModel aModel = (DefaultTableModel) jTable1.getModel();
-            aModel.setColumnIdentifiers(tableColumnsName);
+            //aModel.setColumnIdentifiers(tableColumnsName);
             java.sql.ResultSetMetaData rsmd = rs.getMetaData();
             int colNo = rsmd.getColumnCount();
             while (rs.next()) {
@@ -350,6 +383,24 @@ public class ListarProdutos extends javax.swing.JFrame {
         }
         jTable1.addRowSelectionInterval(0, 0);
     }
+    
+    public void formatar(){
+        int nLinhas = jTable1.getRowCount();
+        
+        for (int i = 0; i< nLinhas; i++){
+            String formato =  jTable1.getValueAt(i, 2).toString();
+            DecimalFormat df = new DecimalFormat("#0.00"); 
+            formato = df.format(Float.parseFloat(formato));
+            jTable1.setValueAt(formato, i, 2);
+            jTable1.getColumnModel().getColumn(2).setCellRenderer(new CellRenderer()); 
+            CellRenderer cell = new CellRenderer();
+            cell.setAlinhamento(4);
+            jTable1.getColumnModel().getColumn(0).setCellRenderer(cell);
+            cell.setAlinhamento(4);
+            jTable1.getColumnModel().getColumn(3).setCellRenderer(cell);
+            
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBTN_Incluir;
@@ -359,6 +410,7 @@ public class ListarProdutos extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMI_Listar;
     private javax.swing.JMenu jMclientes;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem3;

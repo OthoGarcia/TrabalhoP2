@@ -53,8 +53,10 @@ public class EfetuarPedido extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jBtn_Cancelar = new javax.swing.JButton();
+        jBT_Finalizar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -97,6 +99,13 @@ public class EfetuarPedido extends javax.swing.JFrame {
             }
         });
 
+        jBT_Finalizar.setText("Finalizar Pedido");
+        jBT_Finalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBT_FinalizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -106,10 +115,12 @@ public class EfetuarPedido extends javax.swing.JFrame {
                 .addGap(160, 160, 160)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBT_Finalizar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBtn_Cancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLBL_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -122,12 +133,13 @@ public class EfetuarPedido extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLBL_Total, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(jLBL_Total, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton1)
                         .addComponent(jLabel3)
                         .addComponent(jButton2)
-                        .addComponent(jBtn_Cancelar)))
+                        .addComponent(jBtn_Cancelar)
+                        .addComponent(jBT_Finalizar)))
                 .addContainerGap())
         );
 
@@ -155,6 +167,7 @@ public class EfetuarPedido extends javax.swing.JFrame {
             salvarPedido();
         }
         preencherTabela();
+        
     }//GEN-LAST:event_formWindowOpened
 
     private void jBtn_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_CancelarActionPerformed
@@ -173,6 +186,15 @@ public class EfetuarPedido extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_jBtn_CancelarActionPerformed
+
+    private void jBT_FinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBT_FinalizarActionPerformed
+        PedidoDAO pedido = new PedidoDAO();
+        
+        pedido.alterarTotal(total());
+        ListarPedido lPedido = new ListarPedido();
+        lPedido.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jBT_FinalizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,6 +286,7 @@ public class EfetuarPedido extends javax.swing.JFrame {
 
         DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
         tableModel.setNumRows(0);
+        
         try {
             ItemDAO item = new ItemDAO();
             PedidoDAO pedido = new PedidoDAO();
@@ -285,16 +308,21 @@ public class EfetuarPedido extends javax.swing.JFrame {
                 jTable1.addRowSelectionInterval(0, 0);
             }
             DecimalFormat df = new DecimalFormat("0.00");
-            
+          
             jLBL_Total.setText(df.format(total()));
         } catch (SQLException ex) {
             Logger.getLogger(ListarProdutos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
 
     }
+    
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBT_Finalizar;
     private javax.swing.JButton jBtn_Cancelar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
